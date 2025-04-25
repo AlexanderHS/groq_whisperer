@@ -1,6 +1,60 @@
 # Groq Whisperer
 
-A Python application that transcribes speech to text in real-time using Groq's Whisper implementation. This is a fork of [Kenny Vaneetvelde's work](https://github.com/kennyvv/groq-whisperer), enhanced with additional features and improvements.
+A voice-to-text application using Groq's Whisper model for fast, accurate transcription.
+
+## Installation
+
+1. Clone this repository:
+```bash
+git clone https://github.com/yourusername/groq_whisperer.git
+cd groq_whisperer
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Set up your Groq API key:
+```bash
+echo "GROQ_API_KEY=your-api-key-here" > .env
+```
+
+4. Run the install script:
+```bash
+./install.sh
+```
+
+This will:
+- Copy the start script to your home directory as `start_whispering.sh`
+- Add a `groqw` alias to your shell configuration
+
+## Usage
+
+After installation, you can start the application in two ways:
+
+1. Run directly:
+```bash
+~/start_whispering.sh
+```
+
+2. Use the alias (after sourcing your shell configuration):
+```bash
+source ~/.bashrc  # or ~/.zshrc
+groqw
+```
+
+Once running:
+- Hold the PAUSE key to record
+- Release to stop recording and transcribe
+- The transcription will be automatically copied to your clipboard
+
+## Requirements
+
+- Python 3.8+
+- PyAudio
+- A Groq API key
+- A microphone
 
 ## Features
 
@@ -22,46 +76,6 @@ This fork includes several enhancements:
 - Better error handling and debugging output
 - Comprehensive installation script with dependency management
 - Structured project organization with `.gitignore` and requirements
-
-## Prerequisites
-
-- Python 3.x
-- A Groq API key
-- PyAudio compatible audio input device (e.g., microphone)
-- Linux environment (tested on Linux 6.13.7-zen1-1-zen)
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AlexanderHS/groq_whisperer.git
-   cd groq_whisperer
-   ```
-
-2. Copy the environment template and configure your settings:
-   ```bash
-   cp .env.template .env
-   ```
-   Edit `.env` and add your Groq API key and preferred audio device index.
-
-3. Run the start script:
-   ```bash
-   ./start_whisper.sh
-   ```
-
-The script will automatically:
-- Create a virtual environment if needed
-- Install all required dependencies
-- Configure your environment
-- Start the application
-
-## Usage
-
-1. Run the application using `./start_whisper.sh`
-2. The application will list available audio input devices
-3. Press and hold the PAUSE key to record
-4. Release the PAUSE key to stop recording
-5. The transcription will be automatically copied to your clipboard
 
 ## Configuration
 
@@ -89,7 +103,7 @@ All required packages are listed in `requirements.txt` and are automatically ins
 
 ## Credits
 
-This project is a fork of [groq-whisperer](https://github.com/kennyvv/groq-whisperer) by Kenny Vaneetvelde.
+This project is a fork of [groq-whisperer](https://github.com/KennyVaneetvelde/groq_whisperer) by Kenny Vaneetvelde.
 
 ## License
 
