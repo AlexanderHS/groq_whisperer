@@ -1,6 +1,18 @@
 # Groq Whisperer
 
-A voice-to-text application using Groq's Whisper model for fast, accurate transcription.
+A voice-to-text application using Groq's Whisper model for fast, accurate transcription, with system-wide hotkey support and sound notifications.
+
+## Features
+
+- Real-time audio transcription using Groq's Whisper API
+- System-wide hotkey support for starting/stopping recording
+- Sound notifications for recording start/stop and completion
+- Automatic text insertion at cursor position
+- Australian/British English optimisation
+- Intelligent handling of programming terminology and syntax
+- Configurable audio device selection
+- Environment-based configuration
+- Background sound processing for minimal latency
 
 ## Installation
 
@@ -10,96 +22,99 @@ git clone https://github.com/yourusername/groq_whisperer.git
 cd groq_whisperer
 ```
 
-2. Install dependencies:
+2. Create and activate a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Set up your Groq API key:
+4. Set up your Groq API key:
 ```bash
 echo "GROQ_API_KEY=your-api-key-here" > .env
 ```
 
-4. Run the install script:
+## System Integration
+
+The application provides two scripts for system-wide integration:
+- `run_recorder.sh`: Starts the recording service
+- `stop_recorder.sh`: Stops the recording service
+
+You can bind these to system-wide hotkeys. For example, create these scripts in your home directory:
+
 ```bash
-./install.sh
+# ~/meta-a.sh (Start recording)
+#!/bin/bash
+echo "meta-a ran at $(date)" >> "$HOME/shortcut_log.txt"
+"$HOME/repos/groq_whisperer/run_recorder.sh"
+
+# ~/meta-z.sh (Stop recording)
+#!/bin/bash
+echo "meta-z ran at $(date)" >> "$HOME/shortcut_log.txt"
+"$HOME/repos/groq_whisperer/stop_recorder.sh"
 ```
 
-This will:
-- Copy the start script to your home directory as `start_whispering.sh`
-- Add a `groqw` alias to your shell configuration
-
-## Usage
-
-After installation, you can start the application in two ways:
-
-1. Run directly:
-```bash
-~/start_whispering.sh
-```
-
-2. Use the alias (after sourcing your shell configuration):
-```bash
-source ~/.bashrc  # or ~/.zshrc
-groqw
-```
-
-Once running:
-- Hold the PAUSE key to record
-- Release to stop recording and transcribe
-- The transcription will be automatically copied to your clipboard
-
-## Requirements
-
-- Python 3.8+
-- PyAudio
-- A Groq API key
-- A microphone
-
-## Features
-
-- Real-time audio transcription using Groq's Whisper API
-- Hold-to-speak functionality using the PAUSE key
-- Automatic clipboard integration
-- Australian/British English optimisation
-- Intelligent handling of programming terminology and syntax
-- Configurable audio device selection
-- Environment-based configuration
-
-## Improvements Over Original
-
-This fork includes several enhancements:
-- Support for Australian/British English spelling conventions
-- Enhanced Whisper prompting for better technical term recognition
-- Proper environment variable management with `.env` support
-- Improved audio device handling and configuration
-- Better error handling and debugging output
-- Comprehensive installation script with dependency management
-- Structured project organization with `.gitignore` and requirements
+Then bind your preferred hotkeys to these scripts using your desktop environment's settings.
 
 ## Configuration
 
 The `.env` file supports the following settings:
 ```
 GROQ_API_KEY=your_groq_api_key_here
-AUDIO_DEVICE_INDEX=12  # Set to your preferred audio input device
+AUDIO_DEVICE_INDEX=12  # Optional: Set to your preferred audio input device
 ```
 
-## Troubleshooting
+## Audio Device Selection
 
-If you encounter audio device issues:
-1. Run the application to see a list of available audio devices
-2. Note the index of your preferred device
-3. Update the `AUDIO_DEVICE_INDEX` in your `.env` file
+If no `AUDIO_DEVICE_INDEX` is specified in `.env`, the application will:
+1. List all available audio devices on startup
+2. Attempt to find a suitable microphone automatically
+3. Use the first available input device if no microphone is found
+
+To set a specific device:
+1. Run the application once to see the device list
+2. Note your preferred device's index
+3. Add `AUDIO_DEVICE_INDEX=<number>` to your `.env` file
+
+## Sound Notifications
+
+The application uses sound notifications to indicate:
+- Recording start (single tone)
+- Recording stop (double tone)
+- Transcription complete (completion tone)
+
+Sound files are located in the `sounds` directory:
+- `start.mp3`: Used for recording start/stop
+- `complete.mp3`: Used for transcription completion
 
 ## Dependencies
 
-All required packages are listed in `requirements.txt` and are automatically installed by the start script. Key dependencies include:
-- groq
-- PyAudio
-- keyboard
-- PyAutoGUI
-- python-dotenv
+Key dependencies include:
+- groq: For API access
+- PyAudio: For audio recording
+- pygame: For sound notifications
+- python-dotenv: For environment configuration
+- xdotool: For text insertion (system requirement)
+
+## Troubleshooting
+
+### Audio Issues
+- Ensure your microphone is properly connected and selected
+- Check the system sound settings
+- Try specifying a different `AUDIO_DEVICE_INDEX` in `.env`
+
+### Text Insertion Issues
+- Ensure xdotool is installed on your system
+- Check that your cursor is focused where you want the text
+
+### Sound Notification Issues
+- Ensure your system's sound is working
+- Check that the MP3 files exist in the `sounds` directory
+- Verify pygame is properly installed
 
 ## Credits
 
